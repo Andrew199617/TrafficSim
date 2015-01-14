@@ -27,9 +27,8 @@ public class TrafficWorld extends World {
 		this.getBackground().setColor(Color.GREEN);
 		this.getBackground().fill();
 
-		
-		
-		
+		drawRoads();
+
 		
 		int y = sideOfRoad.TOPORRIGHT.getSide();
 		int x = sideOfRoad.BOTORLEFT.getSide();
@@ -67,18 +66,20 @@ public class TrafficWorld extends World {
 		}
 	}
 
-	public void draw(){
+	public void drawRoads(){
 
 		for (int x = 0; x < TrafficWorld.worldHeight; x += (TrafficWorld.roadLength + TrafficWorld.grassSideLength)){
 			Roads rs = new Roads();
-			this.addObject(rs, 0, 0);
+			this.addObject(rs, worldWidth / 2, x + (roadLength/2));
+			rs.draw(worldWidth,roadLength);
 		}
 		
 		for (int x = 0; x < TrafficWorld.worldWidth; x += (TrafficWorld.roadLength + TrafficWorld.grassTopLength)){
 			Roads rs = new Roads();
-			this.addObject(rs, 0, 0);
+			this.addObject(rs, x + (roadLength/2), worldHeight /2);
+			rs.draw(roadLength,worldHeight);
 		}
 		
-	}
 	
+	}	
 }
