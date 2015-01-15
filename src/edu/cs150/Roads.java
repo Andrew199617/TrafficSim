@@ -1,7 +1,6 @@
 package edu.cs150;
 
 import greenfoot.Actor;
-import greenfoot.Greenfoot;
 import greenfoot.GreenfootImage;
 
 import java.awt.Color;
