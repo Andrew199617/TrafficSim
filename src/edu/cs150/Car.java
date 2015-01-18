@@ -4,9 +4,10 @@ import java.util.Random;
 
 import greenfoot.Actor;
 
-public class Car extends Actor {
+public class Car extends Actor implements IListener {
 	Random rand = new Random();
 	int x;
+	private int moveSpeed = 1;
 	public Car () {
 		x = rand.nextInt(4);
 		if (x == 0){this.setImage("images/topCarBlue.png");}
@@ -14,8 +15,13 @@ public class Car extends Actor {
 		else if (x == 2){this.setImage("images/topCarRed.png");}
 		else{this.setImage("images/topCarYellow.png");}
 	}
+	
+	private enum State {
+		INSIDE,NEAR,FAR
+	}
+	
 	public void act (){
-		move(1);
+		move(moveSpeed);
 		
 		
 		if(getX() >= (TrafficWorld.worldWidth -1)){
@@ -35,6 +41,31 @@ public class Car extends Actor {
 			int x = getX();
 			setLocation(x, TrafficWorld.worldHeight - 1 );
 		}
+		
+	}
+	
+	public void setSpeed(int i) {
+		moveSpeed = i;
+	}
+
+	@Override
+	public void approachingIntersection() {
+		
+		
+	}
+
+	@Override
+	public void enteringIntersection() {
+		
+	}
+
+	@Override
+	public void leavingIntersection() {
+		
+	}
+
+	@Override
+	public void goneIntersection() {
 		
 	}
 

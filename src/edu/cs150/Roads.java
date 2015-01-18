@@ -8,6 +8,7 @@ import java.awt.Color;
 public class Roads extends Actor {
 
 	
+
 	public Roads (){
 		
 	}
@@ -17,5 +18,7 @@ public class Roads extends Actor {
 		image.setColor(Color.GRAY);
 		image.fill();
 		setImage(image);
+		
 	}
+	
 }

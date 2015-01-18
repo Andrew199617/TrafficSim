@@ -10,10 +10,13 @@ import Enum.Rotation;
 import Enum.sideOfRoad;
 
 public class TrafficWorld extends World {
-
-	public ArrayList<Car> cars = new ArrayList<Car>();
-	public ArrayList<TrafficLights> tLightsUpDown = new ArrayList<TrafficLights>();
-	public ArrayList<TrafficLights> tLightsLeftRight = new ArrayList<TrafficLights>();
+	
+	public static ArrayList<Car> carN2S = new ArrayList<Car>();
+	public static ArrayList<Car> carE2W = new ArrayList<Car>();
+	public static ArrayList<TrafficLights> tLightsUpDown = new ArrayList<TrafficLights>();
+	public static ArrayList<TrafficLights> tLightsLeftRight = new ArrayList<TrafficLights>();
+	public static ArrayList<Intersection> inters = new ArrayList<Intersection>();
+	public static ArrayList<Intersection> intersTwo = new ArrayList<Intersection>();
 	Random rand = new Random();
 	//	private static final int LIGHTWIDTH = 15;
 	private static final int LIGHTLENGTH = 35;
@@ -23,22 +26,43 @@ public class TrafficWorld extends World {
 	private static final int carsE2W = (RoadsE2W * 2);
 	public static final int worldWidth = 1000;
 	public static final int worldHeight = 750;
-	public static final int roadLength = 75;
+	public static final int roadLength = 50;
 	public static final int grassTopLength = ((worldWidth - (roadLength * RoadsN2S))/(RoadsN2S - 1));
 	public static final int grassSideLength = ((worldHeight - (roadLength * RoadsE2W))/(RoadsE2W - 1));
-
+	public static final int CARWIDTH = 40;
+	
 	public TrafficWorld () {
 		super(worldWidth,worldHeight,1);
 		this.getBackground().setColor(Color.GREEN);
 		this.getBackground().fill();
 
 		makeRoads();
-		makeTrafficLightsUD();
-		makeTrafficLightsLR();
+		
+		
+		
+		Intersection ins = new Intersection();
+		this.addObject(ins, worldWidth/2, worldHeight/2);
+		ins.draw(TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2), TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2));
+		inters.add(ins);
+		
+		TrafficLights trafficLights = new TrafficLights();
+		trafficLights.setRed();
+		this.addObject(trafficLights, (worldWidth/2), worldHeight/2);
+		tLightsLeftRight.add(trafficLights);
+		
+		Car car = new Car();
+		car.setRotation(Rotation.LEFT.getRotation());
+		this.addObject(car, (worldWidth/2)+100, worldHeight/2);
+		carE2W.add(car);
+//		makeIntersection();
+//		makeTrafficLightsUD();
+//		makeTrafficLightsLR();
 		makeCars();
 
 	}
 
+	
+	
 	private void makeCars() {
 		int y = sideOfRoad.TOPORRIGHT.getSide();
 		int x = sideOfRoad.BOTORLEFT.getSide();
@@ -48,7 +72,7 @@ public class TrafficWorld extends World {
 				car.setRotation(Rotation.LEFT.getRotation());
 			}
 			x = (rand.nextInt(worldWidth - 2) + 1);
-			cars.add(car);
+			carE2W.add(car);
 			this.addObject(car, x, y);
 			y += (roadLength + grassSideLength);
 			if(y > (worldHeight - 1)){
@@ -57,22 +81,22 @@ public class TrafficWorld extends World {
 
 		}
 
-		x = (roadLength /4);
-		for(int i = 0; i < carsN2S; i++){
-			Car car = new Car();
-			if (i >= (carsN2S / 2)){
-				car.setRotation(Rotation.UP.getRotation());
-			}
-			else{car.setRotation(Rotation.DOWN.getRotation());}
-			y = (rand.nextInt(worldHeight - 2) + 1);
-			cars.add(car);
-			this.addObject(car, x, y);
-			x += (roadLength + grassTopLength);
-			if(x > (worldWidth - 1)){
-				x = sideOfRoad.TOPORRIGHT.getSide();
-			}
-
-		}
+//		x = (roadLength /4);
+//		for(int i = 0; i < carsN2S; i++){
+//			Car car = new Car();
+//			if (i >= (carsN2S / 2)){
+//				car.setRotation(Rotation.UP.getRotation());
+//			}
+//			else{car.setRotation(Rotation.DOWN.getRotation());}
+//			y = (rand.nextInt(worldHeight - 2) + 1);
+//			carN2S.add(car);
+//			this.addObject(car, x, y);
+//			x += (roadLength + grassTopLength);
+//			if(x > (worldWidth - 1)){
+//				x = sideOfRoad.TOPORRIGHT.getSide();
+//			}
+//
+//		}
 	}
 
 	public void makeRoads(){
@@ -91,6 +115,18 @@ public class TrafficWorld extends World {
 
 
 	}	
+	
+	public void makeIntersection(){
+		for (int x = 0; x < TrafficWorld.worldWidth; x += (TrafficWorld.roadLength + TrafficWorld.grassTopLength)){
+		for (int y = 0; y < TrafficWorld.worldHeight; y += (TrafficWorld.roadLength + TrafficWorld.grassSideLength)){
+			Intersection ins = new Intersection();
+			this.addObject(ins, x + (TrafficWorld.roadLength/2), y + (TrafficWorld.roadLength/2));
+			ins.draw(TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2), TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2));
+			inters.add(ins);
+		}
+		}
+
+	}
 
 	public void makeTrafficLightsUD(){
 
