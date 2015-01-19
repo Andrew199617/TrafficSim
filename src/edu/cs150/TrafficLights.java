@@ -7,7 +7,7 @@ public class TrafficLights extends Actor {
 	public static final GreenfootImage RED = new GreenfootImage("images/trafficLightRed.png");
 	public static final GreenfootImage YELLOW = new GreenfootImage("images/trafficLightYellow.png");
 	public static final GreenfootImage GREEN = new GreenfootImage("images/trafficLightGreen.png");
-	private static final int TIMEBESWITCH = 200;
+	private static final int TIMEBESWITCH = 50000;
 	private static int timer = TIMEBESWITCH;
 	private static boolean isRedUD = false;
 	private static boolean isRedLR = true;

@@ -40,23 +40,23 @@ public class TrafficWorld extends World {
 		
 		
 		
-		Intersection ins = new Intersection();
-		this.addObject(ins, worldWidth/2, worldHeight/2);
-		ins.draw(TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2), TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2));
-		inters.add(ins);
+//		Intersection ins = new Intersection();
+//		this.addObject(ins, worldWidth/2, worldHeight/2);
+//		ins.draw(TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2), TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2));
+//		inters.add(ins);
 		
-		TrafficLights trafficLights = new TrafficLights();
-		trafficLights.setRed();
-		this.addObject(trafficLights, (worldWidth/2), worldHeight/2);
-		tLightsLeftRight.add(trafficLights);
+//		TrafficLights trafficLights = new TrafficLights();
+//		trafficLights.setRed();
+//		this.addObject(trafficLights, (worldWidth/2), worldHeight/2);
+//		tLightsLeftRight.add(trafficLights);
 		
-		Car car = new Car();
-		car.setRotation(Rotation.LEFT.getRotation());
-		this.addObject(car, (worldWidth/2)+100, worldHeight/2);
-		carE2W.add(car);
-//		makeIntersection();
-//		makeTrafficLightsUD();
-//		makeTrafficLightsLR();
+//		Car car = new Car();
+//		car.setRotation(Rotation.LEFT.getRotation());
+//		this.addObject(car, (worldWidth/2)+100, worldHeight/2);
+//		carE2W.add(car);
+		makeIntersection();
+		makeTrafficLightsUD();
+		makeTrafficLightsLR();
 		makeCars();
 
 	}
@@ -69,7 +69,7 @@ public class TrafficWorld extends World {
 		for(int i = 0; i < carsE2W; i++){
 			Car car = new Car();
 			if (i >= (carsE2W / 2)){
-				car.setRotation(Rotation.LEFT.getRotation());
+				car.setRotation(car.rotation = Rotation.LEFT.getRotation());
 			}
 			x = (rand.nextInt(worldWidth - 2) + 1);
 			carE2W.add(car);
@@ -81,22 +81,22 @@ public class TrafficWorld extends World {
 
 		}
 
-//		x = (roadLength /4);
-//		for(int i = 0; i < carsN2S; i++){
-//			Car car = new Car();
-//			if (i >= (carsN2S / 2)){
-//				car.setRotation(Rotation.UP.getRotation());
-//			}
-//			else{car.setRotation(Rotation.DOWN.getRotation());}
-//			y = (rand.nextInt(worldHeight - 2) + 1);
-//			carN2S.add(car);
-//			this.addObject(car, x, y);
-//			x += (roadLength + grassTopLength);
-//			if(x > (worldWidth - 1)){
-//				x = sideOfRoad.TOPORRIGHT.getSide();
-//			}
-//
-//		}
+		x = (roadLength /4);
+		for(int i = 0; i < carsN2S; i++){
+			Car car = new Car();
+			if (i >= (carsN2S / 2)){
+				car.setRotation(car.rotation = Rotation.UP.getRotation());
+			}
+			else{car.setRotation(car.rotation = Rotation.DOWN.getRotation());}
+			y = (rand.nextInt(worldHeight - 2) + 1);
+			carN2S.add(car);
+			this.addObject(car, x, y);
+			x += (roadLength + grassTopLength);
+			if(x > (worldWidth - 1)){
+				x = sideOfRoad.TOPORRIGHT.getSide();
+			}
+
+		}
 	}
 
 	public void makeRoads(){
