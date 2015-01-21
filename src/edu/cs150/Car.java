@@ -2,15 +2,29 @@ package edu.cs150;
 
 import java.util.Random;
 
+import Enum.Rotation;
 import greenfoot.Actor;
 
-public class Car extends Actor  {
+public class Car extends Actor implements IListener {
 	Random rand = new Random();
 	int x;
 	private int moveSpeed = 1;
-	private boolean chance = true;
+	private int chance = 0;
 	private boolean stoped = false;
 	public int rotation = 0;
+
+	private enum State {
+		APPROACHING(1),ENTERING(2),LEAVING(3),LEFT(4);
+
+		private int chance = 1;
+
+		private State(int chance){
+			this.chance = chance;
+		}
+
+
+	}
+
 	public Car () {
 		x = rand.nextInt(4);
 		if (x == 0){this.setImage("images/topCarBlue.png");}
@@ -19,7 +33,7 @@ public class Car extends Actor  {
 		else{this.setImage("images/topCarYellow.png");}
 	}
 
-	
+
 
 	public void act (){
 		move(moveSpeed);
@@ -41,21 +55,55 @@ public class Car extends Actor  {
 			int x = getX();
 			setLocation(x, TrafficWorld.worldHeight - 1 );
 		}
+		
+		stopCar();
+	}
+
+
+
+	private void stopCar() {
+
+		if(chance == State.APPROACHING.chance){
+
+			if(TrafficWorld.tLightsLeftRight.get(0).isRedLR()){
+				if(this.rotation == Rotation.LEFT.getRotation() || this.rotation == Rotation.RIGHT.getRotation() ){
+					this.setSpeed(0);
+				}
+			}
+			else if(!TrafficWorld.tLightsLeftRight.get(0).isRedLR()){
+				if(this.rotation == Rotation.LEFT.getRotation() || this.rotation == Rotation.RIGHT.getRotation() ){
+					this.setSpeed(1);
+				}
+			}
+			if(TrafficWorld.tLightsUpDown.get(0).isRedUD()){
+				if(this.rotation == Rotation.UP.getRotation() || this.rotation == Rotation.DOWN.getRotation() ){
+					this.setSpeed(0);
+				}
+			}
+			else if(!TrafficWorld.tLightsUpDown.get(0).isRedUD()){
+				if(this.rotation == Rotation.UP.getRotation() || this.rotation == Rotation.DOWN.getRotation() ){
+					this.setSpeed(1);
+				}
+			}
+
+		}
+
+
+
 
 	}
+
+
+
+
+
 
 	public void setSpeed(int i) {
 		moveSpeed = i;
 	}
 
-	
-	public boolean isChance() {
-		return chance;
-	}
 
-	public void setChance(boolean chance) {
-		this.chance = chance;
-	}
+
 
 	public boolean isStoped() {
 		return stoped;
@@ -68,5 +116,49 @@ public class Car extends Actor  {
 	public int getMoveSpeed() {
 		return moveSpeed;
 	}
-	
+
+
+
+	public int getChance() {
+		return chance;
+	}
+
+
+
+	public void setChance(int chance) {
+		this.chance = chance;
+	}
+
+
+
+	@Override
+	public void approachingIntersection() {
+		chance = State.APPROACHING.chance;
+
+	}
+
+
+
+	@Override
+	public void enteringIntersection() {
+		chance = State.ENTERING.chance;
+
+	}
+
+
+
+	@Override
+	public void leavingIntersection() {
+		chance = State.LEAVING.chance;
+
+	}
+
+
+
+	@Override
+	public void goneIntersection() {
+		chance = State.LEFT.chance;
+
+	}
+
 }

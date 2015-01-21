@@ -38,22 +38,6 @@ public class TrafficWorld extends World {
 
 		makeRoads();
 		
-		
-		
-//		Intersection ins = new Intersection();
-//		this.addObject(ins, worldWidth/2, worldHeight/2);
-//		ins.draw(TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2), TrafficWorld.roadLength + (TrafficWorld.CARWIDTH/2));
-//		inters.add(ins);
-		
-//		TrafficLights trafficLights = new TrafficLights();
-//		trafficLights.setRed();
-//		this.addObject(trafficLights, (worldWidth/2), worldHeight/2);
-//		tLightsLeftRight.add(trafficLights);
-		
-//		Car car = new Car();
-//		car.setRotation(Rotation.LEFT.getRotation());
-//		this.addObject(car, (worldWidth/2)+100, worldHeight/2);
-//		carE2W.add(car);
 		makeIntersection();
 		makeTrafficLightsUD();
 		makeTrafficLightsLR();

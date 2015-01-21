@@ -47,22 +47,22 @@ public class TrafficLights extends Actor {
 	private void y2RandR2G() {
 		for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++){
 			if(TrafficWorld.tLightsUpDown.get(i).getImage() == YELLOW){
-				TrafficWorld.tLightsUpDown.get(i).setImage(RED);
 				setRedUD(true);
+				TrafficWorld.tLightsUpDown.get(i).setImage(RED);
 			}
 			else if(TrafficWorld.tLightsUpDown.get(i).getImage() == RED){
-				TrafficWorld.tLightsUpDown.get(i).setImage(GREEN);
 				setRedUD(false);
+				TrafficWorld.tLightsUpDown.get(i).setImage(GREEN);
 			}
 		}
 		for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++){
 			if(TrafficWorld.tLightsLeftRight.get(i).getImage() == YELLOW){
-				TrafficWorld.tLightsLeftRight.get(i).setImage(RED);
 				setRedLR(true);
+				TrafficWorld.tLightsLeftRight.get(i).setImage(RED);
 			}
 			else if(TrafficWorld.tLightsLeftRight.get(i).getImage() == RED){
-				TrafficWorld.tLightsLeftRight.get(i).setImage(GREEN);
 				setRedLR(false);
+				TrafficWorld.tLightsLeftRight.get(i).setImage(GREEN);
 			}
 		}
 	}
@@ -82,7 +82,7 @@ public class TrafficLights extends Actor {
 		}
 	}
 
-	public static boolean isRedLR() {
+	public boolean isRedLR() {
 		return isRedLR;
 	}
 
@@ -90,7 +90,7 @@ public class TrafficLights extends Actor {
 		TrafficLights.isRedLR = isRedLR;
 	}
 
-	public static boolean isRedUD() {
+	public boolean isRedUD() {
 		return isRedUD;
 	}
 
