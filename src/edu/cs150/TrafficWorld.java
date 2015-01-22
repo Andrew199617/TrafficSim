@@ -69,24 +69,37 @@ public class TrafficWorld extends World {
 			int randNum2 = rand.nextInt(RoadsE2W);
 
 			if(randNum2 == 0){
-				if(car.rotation == Rotation.RIGHT.getRotation()){
-					y = sideOfRoad.TOPORRIGHT.getSide();
+				if (!tLightsLeftRight.get(0).isRedLR()){
+					if(car.rotation == Rotation.RIGHT.getRotation()){
+						y = sideOfRoad.TOPORRIGHT.getSide();
+						carE2W.add(car);
+						this.addObject(car, x, y);
+					}
+					else if(car.rotation == Rotation.LEFT.getRotation()){
+						y = sideOfRoad.BOTORLEFT.getSide();
+						carE2W.add(car);
+						this.addObject(car, x, y);
+					}
 				}
-				else if(car.rotation == Rotation.LEFT.getRotation()){
-					y = sideOfRoad.BOTORLEFT.getSide();
-				}
+				else{removeObject(car);}
 			}
 			else if(randNum2 >0){
-				if(car.rotation == Rotation.RIGHT.getRotation()){
-					y = (sideOfRoad.TOPORRIGHT.getSide() + ((roadLength + grassSideLength)*randNum2));
+				if (!tLightsLeftRight.get(0).isRedLR()){
+					if(car.rotation == Rotation.RIGHT.getRotation()){
+						y = (sideOfRoad.TOPORRIGHT.getSide() + ((roadLength + grassSideLength)*randNum2));
+						carE2W.add(car);
+						this.addObject(car, x, y);					
+					}
+					else if(car.rotation == Rotation.LEFT.getRotation()){
+						y = (sideOfRoad.BOTORLEFT.getSide() + ((roadLength + grassSideLength)*randNum2));
+						carE2W.add(car);
+						this.addObject(car, x, y);
+					}
 				}
-				else if(car.rotation == Rotation.LEFT.getRotation()){
-					y = (sideOfRoad.BOTORLEFT.getSide() + ((roadLength + grassSideLength)*randNum2));
-				}
+				else{removeObject(car);}
 			}
 
-			carE2W.add(car);
-			this.addObject(car, x, y);
+
 
 		}
 		if(carN2S.size() < RoadsN2S){
@@ -101,25 +114,36 @@ public class TrafficWorld extends World {
 			int randNum2 = rand.nextInt(RoadsN2S);
 
 			if(randNum2 == 0){
-				if(car.rotation == Rotation.UP.getRotation()){
-					x = sideOfRoad.TOPORRIGHT.getSide();
+				if (!tLightsLeftRight.get(0).isRedUD()){
+					if(car.rotation == Rotation.UP.getRotation()){
+						x = sideOfRoad.TOPORRIGHT.getSide();
+						carN2S.add(car);
+						this.addObject(car, x, y);
+					}
+					else if(car.rotation == Rotation.DOWN.getRotation()){
+						x = sideOfRoad.BOTORLEFT.getSide();
+						carN2S.add(car);
+						this.addObject(car, x, y);
+					}
 				}
-				else if(car.rotation == Rotation.DOWN.getRotation()){
-					x = sideOfRoad.BOTORLEFT.getSide();
-				}
+				else{removeObject(car);}
 			}
 			else if(randNum2 >0){
-				if(car.rotation == Rotation.UP.getRotation()){
-					x = (sideOfRoad.TOPORRIGHT.getSide() + ((roadLength + grassTopLength)*randNum2));
+				if (!tLightsLeftRight.get(0).isRedUD()){
+					if(car.rotation == Rotation.UP.getRotation()){
+						x = (sideOfRoad.TOPORRIGHT.getSide() + ((roadLength + grassTopLength)*randNum2));
+						carN2S.add(car);
+						this.addObject(car, x, y);
+					}
+					else if(car.rotation == Rotation.DOWN.getRotation()){
+						x = (sideOfRoad.BOTORLEFT.getSide() + ((roadLength + grassTopLength)*randNum2));
+						carN2S.add(car);
+						this.addObject(car, x, y);
+					}
 				}
-				else if(car.rotation == Rotation.DOWN.getRotation()){
-					x = (sideOfRoad.BOTORLEFT.getSide() + ((roadLength + grassTopLength)*randNum2));
-				}
+				else{removeObject(car);}
 			}
-
-
-			carN2S.add(car);
-			this.addObject(car, x, y);
+			
 
 		}
 

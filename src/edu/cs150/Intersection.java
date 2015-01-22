@@ -14,7 +14,7 @@ public class Intersection extends Actor {
 	List<IListener> actors = new ArrayList<IListener>();
 	List<IListener> actorsTwo= new ArrayList<IListener>();
 
-
+	int delay = 50;
 
 	public Intersection (){
 
@@ -33,11 +33,12 @@ public class Intersection extends Actor {
 		@SuppressWarnings("unchecked")
 		List<IListener> inRange = this.getObjectsInRange(TrafficWorld.roadLength, IListener.class);
 		@SuppressWarnings("unchecked")
-		List<IListener> inRange2 = this.getObjectsInRange(TrafficWorld.roadLength + 3, IListener.class);
+		List<IListener> inRange2 = this.getObjectsInRange(TrafficWorld.roadLength + 10, IListener.class);
+
 
 		approachingIntersection(inRange2);
 		enteringIntersection(inRange);
-		leavingIntersection(inRange2);
+		leavingIntersection(inRange);
 		goneIntersection(inRange2);
 	}
 
@@ -45,12 +46,17 @@ public class Intersection extends Actor {
 
 		for(IListener c: inRange){
 			if(!actorsTwo.contains(c)){
-				actorsTwo = inRange;
-				c.approachingIntersection();		
+				if(actors.isEmpty()){
+					actorsTwo = inRange;
+					c.approachingIntersection();
+				}
 			}
 		}
-
 	}
+
+
+
+
 
 
 	public void enteringIntersection(List<IListener> inRange) {
@@ -65,27 +71,31 @@ public class Intersection extends Actor {
 
 
 	public void leavingIntersection(List<IListener> inRange) {
-		if(!(actors == null)){
+		List<IListener> bob = new ArrayList<IListener>(actors);
+		if(actors != null){
 			for(IListener c: actors){
 				if(!inRange.contains(c)){
-					actors = inRange;
-					c.leavingIntersection();		
+					c.leavingIntersection();
+					bob.remove(c);
 				}
 			}
 		}
+		actors = bob;
 	}
 
 
 	public void goneIntersection(List<IListener> inRange) {
-		if(!(actorsTwo == null)){
+
+		List<IListener> bob = new ArrayList<IListener>(actorsTwo);
+		if(actorsTwo != null){
 			for(IListener c: actorsTwo){
 				if(!inRange.contains(c)){
-					actorsTwo = inRange;
-					c.goneIntersection();		
+					bob.remove(c);
+					c.goneIntersection();
 				}
 			}
 		}
-
+		actorsTwo = bob;
 	}
 
 }
