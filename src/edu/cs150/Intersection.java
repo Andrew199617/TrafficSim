@@ -22,8 +22,6 @@ public class Intersection extends Actor {
 
 	public void draw(int width, int height){
 		GreenfootImage image = new GreenfootImage(width, height);
-		image.setColor(Color.RED);
-		image.fill();
 		image.setTransparency(0);
 		setImage(image);
 	}
@@ -33,69 +31,50 @@ public class Intersection extends Actor {
 		@SuppressWarnings("unchecked")
 		List<IListener> inRange = this.getObjectsInRange(TrafficWorld.roadLength, IListener.class);
 		@SuppressWarnings("unchecked")
-		List<IListener> inRange2 = this.getObjectsInRange(TrafficWorld.roadLength + 10, IListener.class);
+		List<IListener> inRange2 = this.getObjectsInRange(TrafficWorld.roadLength + 5, IListener.class);
 
 
 		approachingIntersection(inRange2);
 		enteringIntersection(inRange);
 		leavingIntersection(inRange);
 		goneIntersection(inRange2);
+		actorsTwo = inRange2;
+		actors = inRange;
 	}
 
 	public void approachingIntersection(List<IListener> inRange) {
-
 		for(IListener c: inRange){
 			if(!actorsTwo.contains(c)){
-				if(actors.isEmpty()){
-					actorsTwo = inRange;
-					c.approachingIntersection();
-				}
+				c.approachingIntersection();
 			}
 		}
 	}
-
-
-
-
 
 
 	public void enteringIntersection(List<IListener> inRange) {
 		for(IListener c: inRange){
 			if(!actors.contains(c)){
-				actors = inRange;
 				c.enteringIntersection();		
 			}
 		}
-
 	}
 
 
 	public void leavingIntersection(List<IListener> inRange) {
-		List<IListener> bob = new ArrayList<IListener>(actors);
-		if(actors != null){
-			for(IListener c: actors){
-				if(!inRange.contains(c)){
-					c.leavingIntersection();
-					bob.remove(c);
-				}
+		for(IListener c: actors){
+			if(!inRange.contains(c)){
+				c.leavingIntersection();
 			}
 		}
-		actors = bob;
 	}
 
 
 	public void goneIntersection(List<IListener> inRange) {
-
-		List<IListener> bob = new ArrayList<IListener>(actorsTwo);
-		if(actorsTwo != null){
-			for(IListener c: actorsTwo){
-				if(!inRange.contains(c)){
-					bob.remove(c);
-					c.goneIntersection();
-				}
+		for(IListener c: actorsTwo){
+			if(!inRange.contains(c)){
+				c.goneIntersection();
 			}
 		}
-		actorsTwo = bob;
 	}
 
 }

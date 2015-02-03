@@ -11,7 +11,8 @@ public class TrafficLights extends Actor {
 	private static int timer = TIMEBESWITCH;
 	private static boolean isRedUD = false;
 	private static boolean isRedLR = true;
-	private boolean hasTurnedRed = false;
+	private static boolean hasTurnedRedLR = false;
+	private static boolean hasTurnedRedUD = true;
 
 	public TrafficLights(){
 
@@ -32,6 +33,7 @@ public class TrafficLights extends Actor {
 	public void act (){
 
 		if(timer >TIMEBESWITCH/10){
+			setTheHasTurnedReds();
 			timer--;
 		}
 		else if(timer > TIMEBESWITCH/13){
@@ -49,71 +51,72 @@ public class TrafficLights extends Actor {
 
 	}
 
-	
+	private void setTheHasTurnedReds() {
+		if(TrafficWorld.tLightsLeftRight.get(0).getImage() == RED){
+			hasTurnedRedLR = false;
+		}
+		else if(TrafficWorld.tLightsUpDown.get(0).getImage() == RED){
+			hasTurnedRedUD = false;
+		}
+	}
+
+
 	private void turnRed() {
-		for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++){
-			if(TrafficWorld.tLightsUpDown.get(i).getImage() == YELLOW){
-				setRedUD(true);
-				TrafficWorld.tLightsUpDown.get(i).hasTurnedRed = true;
+		if(TrafficWorld.tLightsUpDown.get(0).getImage() == YELLOW){
+			setRedUD(true);
+			hasTurnedRedUD = true;
+			for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++)
 				TrafficWorld.tLightsUpDown.get(i).setImage(RED);
-			}
 		}
-		for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++){
-			if(TrafficWorld.tLightsLeftRight.get(i).getImage() == YELLOW){
-				setRedLR(true);
-				TrafficWorld.tLightsLeftRight.get(i).hasTurnedRed = true;
+
+		if(TrafficWorld.tLightsLeftRight.get(0).getImage() == YELLOW){
+			setRedLR(true);
+			hasTurnedRedLR = true;
+			for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++)
 				TrafficWorld.tLightsLeftRight.get(i).setImage(RED);
-			}
 		}
+
 	}
 
-	
-	
+
+
 	private void turnGreen() {
-		for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++){
-			if(!TrafficWorld.tLightsUpDown.get(i).hasTurnedRed){
-				if(TrafficWorld.tLightsUpDown.get(i).getImage() == RED){
-					setRedUD(false);
+		if(!hasTurnedRedUD){
+			if(TrafficWorld.tLightsUpDown.get(0).getImage() == RED){
+				setRedUD(false);
+				hasTurnedRedUD = false;
+				for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++)
 					TrafficWorld.tLightsUpDown.get(i).setImage(GREEN);
-				}
 			}
 		}
-
-		for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++){
-			if(!TrafficWorld.tLightsLeftRight.get(i).hasTurnedRed){
-				if(TrafficWorld.tLightsLeftRight.get(i).getImage() == RED){
-					setRedLR(false);
+		if(!hasTurnedRedLR){
+			if(TrafficWorld.tLightsLeftRight.get(0).getImage() == RED){
+				setRedLR(false);
+				hasTurnedRedLR = false;
+				for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++)
 					TrafficWorld.tLightsLeftRight.get(i).setImage(GREEN);
-				}
 			}
 		}
-		for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++){
-			TrafficWorld.tLightsUpDown.get(i).hasTurnedRed = false;
-		}
-		for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++){
-			TrafficWorld.tLightsLeftRight.get(i).hasTurnedRed = false;
-		}
+
 	}
 
-	
-	
+
+
 	private void turnYellow() {
-		for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++){
-			if(TrafficWorld.tLightsUpDown.get(i).getImage() == GREEN){
+		if(TrafficWorld.tLightsUpDown.get(0).getImage() == GREEN){
+			for(int i = 0; i < TrafficWorld.tLightsUpDown.size();i++)
 				TrafficWorld.tLightsUpDown.get(i).setImage(YELLOW);
-
-			}
 		}
-		for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++){
-			if(TrafficWorld.tLightsLeftRight.get(i).getImage() == GREEN){
+
+		if(TrafficWorld.tLightsLeftRight.get(0).getImage() == GREEN){
+			for(int i = 0; i < TrafficWorld.tLightsLeftRight.size();i++)
 				TrafficWorld.tLightsLeftRight.get(i).setImage(YELLOW);
-
-			}
 		}
+
 	}
 
-	
-	
+
+
 	public boolean isRedLR() {
 		return isRedLR;
 	}

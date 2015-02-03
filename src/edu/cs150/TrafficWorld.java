@@ -1,5 +1,10 @@
 package edu.cs150;
 
+import edu.Cars.BlueCar;
+import edu.Cars.Car;
+import edu.Cars.PurpleCar;
+import edu.Cars.RedCar;
+import edu.Cars.YellowCar;
 import greenfoot.World;
 
 import java.awt.Color;
@@ -30,8 +35,8 @@ public class TrafficWorld extends World {
 	public static final int grassTopLength = ((worldWidth - (roadLength * RoadsN2S))/(RoadsN2S - 1));
 	public static final int grassSideLength = ((worldHeight - (roadLength * RoadsE2W))/(RoadsE2W - 1));
 	public static final int CARWIDTH = 40;
-
-
+	private int randCar = 0;
+	Car car;
 
 	public TrafficWorld () {
 		super(worldWidth,worldHeight,1);
@@ -43,7 +48,13 @@ public class TrafficWorld extends World {
 		makeIntersection();
 		makeTrafficLightsUD();
 		makeTrafficLightsLR();
-		makeCars();
+		
+		
+//		Car car = new Car();
+//		carE2W.add(car);
+//		this.addObject(car, sideOfRoad.BOTORLEFT.getSide(), ((roadLength/4) * 3));
+		
+//		makeCars();
 
 	}
 
@@ -54,6 +65,7 @@ public class TrafficWorld extends World {
 
 
 	private void genCars() {
+		
 
 		int y = sideOfRoad.TOPORRIGHT.getSide();
 		int x = sideOfRoad.BOTORLEFT.getSide();
@@ -61,7 +73,8 @@ public class TrafficWorld extends World {
 		if(carE2W.size() < RoadsE2W){
 
 			x = 0;
-			Car car = new Car();
+			randCar();
+			
 
 			int randNum = rand.nextInt(2);
 			if(randNum == 0){car.setRotation(car.rotation = Rotation.LEFT.getRotation()); x = worldWidth; y = sideOfRoad.TOPORRIGHT.getSide();}
@@ -104,7 +117,7 @@ public class TrafficWorld extends World {
 		}
 		if(carN2S.size() < RoadsN2S){
 
-			Car car = new Car();
+			randCar();
 
 			int randNum = rand.nextInt(2);
 			if(randNum == 0){car.setRotation(car.rotation = Rotation.UP.getRotation()); y = worldHeight; x = sideOfRoad.TOPORRIGHT.getSide();}
@@ -150,11 +163,32 @@ public class TrafficWorld extends World {
 	}
 
 
+	private void randCar() {
+		randCar = rand.nextInt(1);
+		switch (randCar) {
+//		case 0:
+//			car = new RedCar();
+//			break;
+//		case 1:
+//			car = new YellowCar();
+//			break;
+//		case 2:
+//			car = new PurpleCar();
+//			break;
+		case 0:
+			car = new BlueCar();
+			break;
+		default:
+			break;
+		}
+	}
+
+
 	private void makeCars() {
 		int y = sideOfRoad.TOPORRIGHT.getSide();
 		int x = sideOfRoad.BOTORLEFT.getSide();
 		for(int i = 0; i < carsE2W; i++){
-			Car car = new Car();
+			randCar();
 			if (i >= (carsE2W / 2)){
 				car.setRotation(car.rotation = Rotation.LEFT.getRotation());
 			}
@@ -170,7 +204,7 @@ public class TrafficWorld extends World {
 
 		x = (roadLength /4);
 		for(int i = 0; i < carsN2S; i++){
-			Car car = new Car();
+			randCar();
 			if (i >= (carsN2S / 2)){
 				car.setRotation(car.rotation = Rotation.UP.getRotation());
 			}
@@ -232,10 +266,13 @@ public class TrafficWorld extends World {
 				this.addObject(trafficLights, x, y);
 				tLightsUpDown.add(trafficLights);
 			}
+			
 		}
-
+		
 	}
-
+	
+	
+	
 	public void makeTrafficLightsLR(){
 		for(int y = (roadLength/2); y < worldHeight;y += roadLength + grassSideLength ){
 			for(int x = ((LIGHTLENGTH/2)+roadLength); x < worldWidth; x+= roadLength + grassTopLength){
